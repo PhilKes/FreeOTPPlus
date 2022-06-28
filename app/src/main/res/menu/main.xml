@@ -61,6 +61,10 @@
         android:title="@string/copy_to_clipboard"
         android:checkable="true"/>
     <item
+        android:id="@+id/send_to_messenger"
+        android:title="@string/send_to_messenger"
+        android:checkable="true"/>
+    <item
         android:id="@+id/require_authentication"
         android:title="@string/require_authentication"
         android:checkable="true"/>

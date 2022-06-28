@@ -242,6 +242,13 @@ class MainActivity : AppCompatActivity() {
                 refreshOptionMenu()
             }
 
+            R.id.send_to_messenger -> {
+                //TODO Display Dialog to select either Telegram/Signal + enter Bot token
+                settings.sendToMessenger = !settings.sendToMessenger
+                item.isChecked = settings.sendToMessenger
+                refreshOptionMenu()
+            }
+
             R.id.require_authentication -> {
                 // Make sure we also verify authentication before turning on the settings
 
@@ -396,6 +403,7 @@ class MainActivity : AppCompatActivity() {
         this.menu?.findItem(R.id.use_dark_theme)?.isChecked = settings.darkMode
         this.menu?.findItem(R.id.copy_to_clipboard)?.isChecked = settings.copyToClipboard
         this.menu?.findItem(R.id.require_authentication)?.isChecked = settings.requireAuthentication
+        this.menu?.findItem(R.id.send_to_messenger)?.isChecked = settings.sendToMessenger
     }
 
     private fun verifyAuthentication() {

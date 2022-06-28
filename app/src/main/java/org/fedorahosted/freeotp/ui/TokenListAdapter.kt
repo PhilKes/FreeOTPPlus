@@ -58,6 +58,11 @@ class TokenListAdapter @Inject constructor(@ActivityContext private val context:
                         Snackbar.make(v, R.string.code_copied, Snackbar.LENGTH_SHORT).show()
                     }
 
+                    if(settings.sendToMessenger) {
+                        //TODO add Telegram/Signal Bot Support
+                        Snackbar.make(v, "SENDING CODE TO MESSENGER", Snackbar.LENGTH_SHORT).show()
+                    }
+
                     tokenCodes[token.id] = codes
 
                     (v as TokenLayout).start(token.tokenType, codes, true)
