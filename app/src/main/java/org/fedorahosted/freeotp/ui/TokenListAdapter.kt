@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.util.ArrayMap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -21,20 +22,31 @@ import org.fedorahosted.freeotp.data.OtpTokenType
 import org.fedorahosted.freeotp.data.legacy.TokenCode
 import org.fedorahosted.freeotp.token.TokenLayout
 import org.fedorahosted.freeotp.data.util.TokenCodeUtil
+import org.fedorahosted.freeotp.messenger.Messenger
+import org.fedorahosted.freeotp.messenger.MessengerFactory
 import org.fedorahosted.freeotp.util.Settings
+import java.lang.IllegalArgumentException
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 @ActivityScoped
-class TokenListAdapter @Inject constructor(@ActivityContext private val context: Context,
-                                           private val otpTokenDatabase: OtpTokenDatabase,
-                                           private val tokenCodeUtil: TokenCodeUtil,
-                                           private val settings: Settings) : ListAdapter<OtpToken, TokenViewHolder>(TokenItemCallback()) {
+class TokenListAdapter @Inject constructor(
+    @ActivityContext private val context: Context,
+    private val otpTokenDatabase: OtpTokenDatabase,
+    private val tokenCodeUtil: TokenCodeUtil,
+    private val settings: Settings,
+    private val messengerFactory: MessengerFactory
+) : ListAdapter<OtpToken, TokenViewHolder>(TokenItemCallback()) {
+    private val tag = TokenListAdapter::class.java.simpleName
+
     val activity = context as AppCompatActivity
-    private val clipboardManager: ClipboardManager = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    private val clipboardManager: ClipboardManager =
+        activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     private val tokenCodes: MutableMap<Long, TokenCode> = ArrayMap()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TokenViewHolder {
-        val tokenLayout = LayoutInflater.from(activity).inflate(R.layout.token, parent, false) as TokenLayout
+        val tokenLayout =
+            LayoutInflater.from(activity).inflate(R.layout.token, parent, false) as TokenLayout
         return TokenViewHolder(activity, tokenLayout)
     }
 
@@ -45,7 +57,7 @@ class TokenListAdapter @Inject constructor(@ActivityContext private val context:
             activity.lifecycleScope.launch {
                 // Fetch the token again to refresh the HOTP token. This is needed because
                 // incrementCounter will not refresh the token after HOTP update
-                otpTokenDatabase.otpTokenDao().get(currentToken.id).first() ?.let { token ->
+                otpTokenDatabase.otpTokenDao().get(currentToken.id).first()?.let { token ->
                     val codes = tokenCodeUtil.generateTokenCode(token)
 
                     if (token.tokenType == OtpTokenType.HOTP) {
@@ -54,13 +66,39 @@ class TokenListAdapter @Inject constructor(@ActivityContext private val context:
 
                     if (settings.copyToClipboard) {
                         // Copy code to clipboard.
-                        clipboardManager.setPrimaryClip(ClipData.newPlainText(null, codes.currentCode))
+                        clipboardManager.setPrimaryClip(
+                            ClipData.newPlainText(
+                                null,
+                                codes.currentCode
+                            )
+                        )
                         Snackbar.make(v, R.string.code_copied, Snackbar.LENGTH_SHORT).show()
                     }
 
-                    if(settings.sendToMessenger) {
-                        //TODO add Telegram/Signal Bot Support
-                        Snackbar.make(v, "SENDING CODE TO MESSENGER", Snackbar.LENGTH_SHORT).show()
+                    if (settings.sendToMessenger) {
+                        try {
+                            messengerFactory.getMessenger().sendOTP(codes.currentCode!!, {
+                                Snackbar.make(
+                                    v,
+                                    context.getString(R.string.messenger_send_success),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }, {
+                                Log.e(tag, it)
+                                Snackbar.make(
+                                    v,
+                                    context.getString(R.string.messenger_send_error),
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            })
+                        } catch (err: IllegalArgumentException) {
+                            Log.e(tag, err.message!!)
+                            Snackbar.make(
+                                v,
+                                context.getString(R.string.messenger_send_error),
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
                     }
 
                     tokenCodes[token.id] = codes

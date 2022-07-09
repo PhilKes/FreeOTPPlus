@@ -65,6 +65,9 @@
         android:title="@string/send_to_messenger"
         android:checkable="true"/>
     <item
+        android:id="@+id/config_messenger"
+        android:title="@string/configure_messenger"/>
+    <item
         android:id="@+id/require_authentication"
         android:title="@string/require_authentication"
         android:checkable="true"/>

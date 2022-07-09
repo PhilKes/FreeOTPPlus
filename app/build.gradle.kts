@@ -47,6 +47,12 @@ android {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
         animationsDisabled = true
     }
+    packagingOptions {
+        exclude("META-INF/NOTICE.md")
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/NOTICE.markdown")
+        exclude("META-INF/DEPENDENCIES")
+    }
 }
 
 dependencies {
@@ -89,6 +95,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.ESPRESSO}")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:${Versions.ESPRESSO}")
 
-
+    implementation("com.github.pengrad:java-telegram-bot-api:${Versions.TELEGRAM_BOT_API}")
 
 }

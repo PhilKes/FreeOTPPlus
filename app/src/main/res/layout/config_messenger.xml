@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   - FreeOTP
+   -
+   - Authors: Nathaniel McCallum <npmccallum@redhat.com>
+   -
+   - Copyright (C) 2013  Nathaniel McCallum, Red Hat
+   -
+   - Licensed under the Apache License, Version 2.0 (the "License");
+   - you may not use this file except in compliance with the License.
+   - You may obtain a copy of the License at
+   -
+   -     http://www.apache.org/licenses/LICENSE-2.0
+   -
+   - Unless required by applicable law or agreed to in writing, software
+   - distributed under the License is distributed on an "AS IS" BASIS,
+   - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   - See the License for the specific language governing permissions and
+   - limitations under the License.
+   -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/messenger_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/messenger"/>
+        <TextView
+            android:id="@+id/messenger_type_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/messenger_type"/>
+        <Spinner
+            android:id="@+id/messenger_type_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+        <TextView
+            android:id="@+id/bot_token_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/messenger_bot_token"/>
+        <EditText
+            android:id="@+id/bot_token_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+        <TextView
+            android:id="@+id/chat_id_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/messenger_chat_id"/>
+        <EditText
+            android:id="@+id/chat_id_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textIsSelectable="true"
+            android:inputType="number"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+        <TextView
+            android:id="@+id/otp_delete_delay_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/messenger_otp_delete_delay"/>
+        <EditText
+            android:id="@+id/otp_delete_delay_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textIsSelectable="true"
+            android:inputType="number"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+    </LinearLayout>
+
+    <View style="@style/Divider" />
+
+    <LinearLayout style="@style/DialogButtonLayout">
+        <Button
+            android:id="@+id/cancel"
+            style="@style/DialogButton"
+            android:text="@android:string/cancel" />
+
+        <Button
+            android:id="@+id/save"
+            style="@style/DialogButton"
+            android:enabled="false"
+            android:text="@string/save" />
+    </LinearLayout>
+</LinearLayout>

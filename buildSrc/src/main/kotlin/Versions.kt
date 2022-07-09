@@ -18,5 +18,6 @@ object Versions {
     const val ANDROIDX_JUNIT = "1.1.3"
     const val ANDROIDX_TRUTH = "1.4.0"
     const val ESPRESSO = "3.4.0"
+    const val TELEGRAM_BOT_API = "6.1.0"
 }
 

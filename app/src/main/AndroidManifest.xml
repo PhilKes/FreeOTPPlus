@@ -40,6 +40,9 @@
             android:name=".ui.EditActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.ConfigureMessengerActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.ShareQrCodeActivity"
             android:theme="@style/DialogTheme" />
         <activity

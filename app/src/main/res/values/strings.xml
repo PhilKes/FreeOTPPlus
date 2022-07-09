@@ -75,5 +75,15 @@
     <string name="screenshot_mode">Screenshot mode</string>
     <string name="launch_with_screenshot_enabled">Launch with screenshot enabled</string>
     <string name="token_details">Token details</string>
+
+    <string name="messenger">Messenger</string>
+    <string name="messenger_type">Messenger Type</string>
+    <string name="messenger_bot_token">Bot Token</string>
+    <string name="messenger_chat_id">Chat ID</string>
+    <string name="messenger_otp_delete_delay">OTP Message delete delay</string>
     <string name="send_to_messenger">Send to messenger</string>
+    <string name="configure_messenger">Configure messenger</string>
+    <string name="messenger_telegram">Telegram</string>
+    <string name="messenger_send_success">OTP sent to Messenger</string>
+    <string name="messenger_send_error">Could not send OTP to Messenger, please check your messenger configuration!</string>
 </resources>

@@ -243,10 +243,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.send_to_messenger -> {
-                //TODO Display Dialog to select either Telegram/Signal + enter Bot token
                 settings.sendToMessenger = !settings.sendToMessenger
                 item.isChecked = settings.sendToMessenger
                 refreshOptionMenu()
+                if(settings.sendToMessenger && settings.messenger == null){
+                    startActivity(Intent(this, ConfigureMessengerActivity::class.java))
+                }
+            }
+
+            R.id.config_messenger -> {
+                startActivity(Intent(this, ConfigureMessengerActivity::class.java))
             }
 
             R.id.require_authentication -> {
